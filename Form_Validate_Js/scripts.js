@@ -58,6 +58,7 @@ stateValidate();
 countryValidate();
 if(usernameValidate() && lastnameValidate() && DOBValidate() && emailValidate() && genderValidate() && phonenoValidate() && addressValidate() && skillsValidate() && cityValidate() && stateValidate() && countryValidate()){
   console.log("True")
+  sendData()
   return true
 }
 return false
@@ -250,6 +251,46 @@ function skillsValidate() {
     skill_error.innerHTML = "";
     return true;
   }
+}
+
+function sendData(){
+
+              event.preventDefault();
+              var formData = new FormData(myForm),
+              result = {};
+        for (var entry of formData.entries())
+              {
+                result[entry[0]] = entry[1];
+              }
+            //  result1 = JSON.stringify(result)
+              // console.log(result);
+              // document.getElementById("md").innerHTML=result1;
+              result2=[]
+          var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            for (var checkbox of checkboxes) {
+            // document.body.append(checkbox.value + ' ');
+              result2.push(checkbox.value)
+            }
+            const post_data = {
+            ...result,
+            'Skills': result2
+        };
+        fetch('http://localhost:3000/api/add', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify(post_data)
+        })
+        .then(res => {
+          // document.getElementById("post").innerHTML="Data Inserted"
+          console.log("Data In")
+        })
+        .catch(err=>{
+          console.log("Error")
+          document.getElementById("post").innerHTML = "Sorry! Error Detected";
+        })  
+        // result=JSON.stringify(result)
 }
 
 
