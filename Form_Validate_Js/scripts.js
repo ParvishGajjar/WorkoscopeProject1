@@ -56,8 +56,7 @@ skillsValidate();
 cityValidate();
 stateValidate();
 countryValidate();
-if(usernameValidate() && lastnameValidate() && DOBValidate() && emailValidate() && genderValidate() && phonenoValidate() && addressValidate() && 
-  skillsValidate() && cityValidate() && stateValidate() && countryValidate()){
+if(usernameValidate() && lastnameValidate() && DOBValidate() && emailValidate() && genderValidate() && phonenoValidate() && addressValidate() && skillsValidate() && cityValidate() && stateValidate() && countryValidate()){
   console.log("True")
   return true
 }
