@@ -20,18 +20,18 @@ connection.connect(function(err) {
   console.log('Connected to the MySQL server.');
 });
 
-app.get('/',function(req,res) {
-  res.sendFile(path.join(__dirname + '/main.html'));
+// app.get('/',function(req,res) {
+//   res.sendFile(path.join(__dirname + '/main.html'));
 
-});
-app.get('/style.css',function(req,res) {
+// });
+// app.get('/style.css',function(req,res) {
  
-  res.sendFile(path.join(__dirname + '/style.css'));
-});
-app.get('/main.js',function(req,res) {
+//   res.sendFile(path.join(__dirname + '/style.css'));
+// });
+// app.get('/main.js',function(req,res) {
  
-  res.sendFile(path.join(__dirname + '/main.js'));
-});
+//   res.sendFile(path.join(__dirname + '/main.js'));
+// });
 
 app.get('/api/users', function (req, res) {
    connection.query('SELECT * FROM UserData;', (err,rows) => {    // () anonymous function passing arguement err and rows 
