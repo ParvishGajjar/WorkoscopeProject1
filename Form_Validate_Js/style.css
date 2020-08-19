@@ -1,0 +1,43 @@
+
+#wrapper {
+    width: 47%;
+    margin: 44px auto;
+    padding: 10px;
+    background: #70eccb;
+}
+
+
+form {
+  margin: 30px auto;
+}
+.textInput {
+  border: none;
+  height: 28px;
+  margin: 2px;
+  border: 1px solid #6B7363;
+  font-size: 1.2em;
+  padding: 5px;
+  width: 95%;
+}
+.textInput:focus {
+  outline: none;
+}
+.btn {
+  width: 98.6%;
+  border: none;
+  margin-top: 5px;
+  color: white;
+  background-color: #3b5998;
+  border-radius: 5px;
+  padding: 12px;
+}
+legend{
+  text-align: center;
+  font-size: 2em;
+  margin-right: 20px;
+}
+fieldset{
+background-color: #70eccb
+}
+mark{
+background-color: #70eccb
