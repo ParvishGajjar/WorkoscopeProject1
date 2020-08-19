@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to create a Checkbox.</p>
+
+<button onclick="myFunction()">Try it</button>
+<div id="divid"></div>
+     <script type="text/javascript">
+     function myFunction(){
+         var hold = document.getElementById("divid");
+         var checkbox = document.createElement('input');
+    checkbox.setAttribute("type","checkbox");
+         var label = document.createElement('label');
+         var tn = document.createTextNode("Python");
+         label.appendChild(tn); 
+         hold.appendChild(label);
+         hold.appendChild(checkbox);
+         }
+      </script>  
+
+</body>
+</html>
