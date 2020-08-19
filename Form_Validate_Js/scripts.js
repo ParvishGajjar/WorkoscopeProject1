@@ -30,6 +30,7 @@ var country_error = document.getElementById('country_error');
 
 
 // SETTING ALL EVENT LISTENERS
+document.addEventListener('load',getSkill,true)
 document.getElementById("username_div").addEventListener('blur',usernameValidate,true);
 document.getElementById("lname_div").addEventListener('blur',lastnameValidate,true);
 document.getElementById("dob_div").addEventListener('blur',DOBValidate,true);
@@ -42,6 +43,29 @@ document.getElementById("city_div").addEventListener('blur',cityValidate,true);
 document.getElementById("state_div").addEventListener('blur',stateValidate,true);
 document.getElementById("country_div").addEventListener('blur',countryValidate,true);
 
+function getSkill(){
+        fetch('http://localhost:3000/api/skills')
+        .then(response => {
+          console.log(response)
+          return response.json()
+        })
+        .then(data => {
+          console.log(data)
+          data.forEach((item)=>{
+            console.log(item["Skill_name"]);
+            // document.getElementById("Skillset").innerHTML=`<input type="checkbox" name="skill" value="${item["Skill_name"]}">${item["Skill_name"]}`
+             var hold = document.getElementById("Skillset");
+         var checkbox = document.createElement('input');
+          checkbox.setAttribute("type","checkbox","value",item["Skill_name"]);
+         var label = document.createElement('label');
+         var tn = document.createTextNode(item["Skill_name"]);
+         label.appendChild(tn); 
+         hold.appendChild(label);
+         hold.appendChild(checkbox);
+          })
+        })
+        .catch(err=>console.log("Skill not fetched"))
+      }
 
 // validation function
 function Validate() {
