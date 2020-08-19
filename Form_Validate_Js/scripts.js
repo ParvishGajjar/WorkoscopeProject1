@@ -30,7 +30,6 @@ var country_error = document.getElementById('country_error');
 
 
 // SETTING ALL EVENT LISTENERS
-document.addEventListener('load',getSkill,true)
 document.getElementById("username_div").addEventListener('blur',usernameValidate,true);
 document.getElementById("lname_div").addEventListener('blur',lastnameValidate,true);
 document.getElementById("dob_div").addEventListener('blur',DOBValidate,true);
@@ -43,32 +42,10 @@ document.getElementById("city_div").addEventListener('blur',cityValidate,true);
 document.getElementById("state_div").addEventListener('blur',stateValidate,true);
 document.getElementById("country_div").addEventListener('blur',countryValidate,true);
 
-function getSkill(){
-        fetch('http://localhost:3000/api/skills')
-        .then(response => {
-          console.log(response)
-          return response.json()
-        })
-        .then(data => {
-          console.log(data)
-          data.forEach((item)=>{
-            console.log(item["Skill_name"]);
-            // document.getElementById("Skillset").innerHTML=`<input type="checkbox" name="skill" value="${item["Skill_name"]}">${item["Skill_name"]}`
-             var hold = document.getElementById("Skillset");
-         var checkbox = document.createElement('input');
-          checkbox.setAttribute("type","checkbox","value",item["Skill_name"]);
-         var label = document.createElement('label');
-         var tn = document.createTextNode(item["Skill_name"]);
-         label.appendChild(tn); 
-         hold.appendChild(label);
-         hold.appendChild(checkbox);
-          })
-        })
-        .catch(err=>console.log("Skill not fetched"))
-      }
 
 // validation function
 function Validate() {
+  event.preventDefault();
 usernameValidate();
 lastnameValidate();
 DOBValidate();
@@ -81,8 +58,7 @@ cityValidate();
 stateValidate();
 countryValidate();
 if(usernameValidate() && lastnameValidate() && DOBValidate() && emailValidate() && genderValidate() && phonenoValidate() && addressValidate() && skillsValidate() && cityValidate() && stateValidate() && countryValidate()){
-  console.log("True")
-  sendData()
+  sendData();
   return true
 }
 return false
@@ -277,6 +253,7 @@ function skillsValidate() {
   }
 }
 
+
 function sendData(){
 
               event.preventDefault();
@@ -316,37 +293,3 @@ function sendData(){
         })  
         // result=JSON.stringify(result)
 }
-
-
-    //     // window.onload=function(){
-    //     var myForm = document.getElementById('vform');
-       
-    //       event.preventDefault();
-    //       var formData = new FormData(myForm),
-    //       result = {};
-
-
-    //       for (var entry of formData.entries())
-    //       {
-    //         result[entry[0]] = entry[1];
-    //       }
-    //        result1 = JSON.stringify(result)
-    //       // console.log(result);
-    //       // document.getElementById("md").innerHTML=result1;
-    //         result1=[]
-    //  var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-    //   for (var checkbox of checkboxes) {
-    //     // document.body.append(checkbox.value + ' ');
-    //     result1.push(checkbox.value)
-    //    }
-    // // result=JSON.stringify(result);
-    // const result2={
-    //   ...result,
-    //   'Skills':result1[1]
-    // }
-    // result3=JSON.stringify(result2);
-    // document.getElementById("mmd").innerHTML=result3;
-    //   console.log(result2);
-
-    //   }
-

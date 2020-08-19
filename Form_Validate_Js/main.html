@@ -6,7 +6,7 @@
 </head>
 <body style="background-color: black">
   <div id="wrapper">
-   <form method="POST" id="vform"  name="vform" onsubmit="return Validate()" >
+   <form method="POST" id="vform" onsubmit="Validate()" name="vform">
     <fieldset>
     <legend><b><mark>Registration Form</mark></b></legend> 
     <div id="username_div" >
@@ -52,8 +52,7 @@
     <br>
     <div id = "skill_div">
       <label>Skills</label> <br>
-      <div id="Skillset"></div>
-    <!--     <input type="checkbox" name="skill[]" value="Python">Python
+        <input type="checkbox" name="skill[]" value="Python">Python
         <input type="checkbox" name="skill[]" value="C">C
         <input type="checkbox" name="skill[]" value="C++">C++
         <input type="checkbox" name="skill[]" value="JAVA">JAVA
@@ -75,7 +74,7 @@
         <input type="checkbox" name="skill[]" value="Management">Management
         <input type="checkbox" name="skill[]" value="Marketing">Marketing
         <input type="checkbox" name="skill[]" value="GO">GO
-        <input type="checkbox" name="skill[]" value="Django">Django<br/> -->
+        <input type="checkbox" name="skill[]" value="Django">Django<br/>
         <div class="error" id="skill_error"></div>
       </div><br/>
       <div id="city_div">
@@ -115,6 +114,8 @@
           </select><br>
            <div class="error" id="country_error"></div>
       </div><br/>
+     
+      <div id="hi"></div>
     <div>
     <input type="submit" name="register" id="submit" value="Register" class="btn">
     </div>
@@ -127,4 +128,5 @@
 </body>
 </html>
 <script src="scripts.js"></script>
+
 
