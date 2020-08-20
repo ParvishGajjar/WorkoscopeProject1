@@ -3,6 +3,41 @@
   <meta charset="UTF-8">
   <title>Form validation with JavaScript</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    
+.loader {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  border: 4px solid #Fff;
+  top: 50%;
+  animation: loader 2s infinite ease;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  
+  25% {
+    transform: rotate(180deg);
+  }
+  
+  50% {
+    transform: rotate(180deg);
+  }
+  
+  75% {
+    transform: rotate(360deg);
+  }
+  
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+  </style>
 </head>
 <body style="background-color: black">
   <div id="wrapper">
@@ -116,72 +151,26 @@
            <div id="country_error"></div>
       </div><br/>
 
-    <div>
-    <input type="submit" name="register" id="submit" value="Register" class="btn">
+    <div id="formsubmitbutton">
+    <input type="submit" name="register" id="submit"  value="Register" class="btn">
     </div>
+<!--     <div id="buttonreplacement" >
+<img src="//www.willmaster.com/images/preload.gif" alt="loading...">
+</div> -->
+
+
+<div id="buttonreplacement" class="btn" style=" height: 30; width: auto; display: none">
+  <img src="http://www.willmaster.com/images/preload.gif" alt="loading..." style="padding-left: 180px;">
+</div>
     </fieldset>
+   
     <script type="text/javascript" src="main.js"></script>
 <!--     <script>
-      function getskills(){
-        fetch('http:localhost:3000/api/skills')
-        .then(response => {
-          console.log(response)
-          response.json()
-        })
-        .then(data => {
-          console.log(data)
-          data.forEach((item)=>{
-            console.log(item["Skill_name"]);
-            document.getElementById("Skillset").innerHTML=`<input type="checkbox" name="skill" value="${item["Skill_name"]}">${item["Skill_name"]}`
-          })
-        })
-        .catch(err=>console.log("Skill not fetched"))
-      }
-      
-    </script> -->
-<!--     <script>
-        window.onload=function(){
-          var myForm = document.getElementById('vform');
-          myForm.addEventListener('submit', function(event){
-              event.preventDefault();
-              var formData = new FormData(myForm),
-              result = {};
-        for (var entry of formData.entries())
-              {
-                result[entry[0]] = entry[1];
-              }
-            //  result1 = JSON.stringify(result)
-              // console.log(result);
-              // document.getElementById("md").innerHTML=result1;
-              result2=[]
-          var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            for (var checkbox of checkboxes) {
-            // document.body.append(checkbox.value + ' ');
-              result2.push(checkbox.value)
-            }
-            const post_data = {
-            ...result,
-            'Skills': result2
-        };
-        fetch('http://localhost:3000/api/add', {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json'
-          },
-          body: JSON.stringify(post_data)
-        })
-        .then(res => {
-          // document.getElementById("post").innerHTML="Data Inserted"
-          console.log("Data In")
-        })
-        .catch(err=>{
-          console.log("Error")
-          document.getElementById("post").innerHTML = "Sorry! Error Detected";
-        })  
-        // result=JSON.stringify(result);
-      });
-      }
-    </script> -->
+
+
+</script>
+
+-->
     <p id="post"></p>
    </form>
   </div>

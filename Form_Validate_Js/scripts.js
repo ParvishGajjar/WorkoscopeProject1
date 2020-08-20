@@ -71,7 +71,12 @@ function getSkill(){
       }
 
 
-
+function loadshow(){
+  document.getElementById("loader").style.display="inline-block"
+}
+function loadhide(){
+  document.getElementById("loader").style.display="none"
+}
 // validation function
 function Validate() {
   event.preventDefault();
@@ -90,6 +95,8 @@ stateValidate();
 countryValidate();
 if(usernameValidate() && lastnameValidate() && DOBValidate() && emailValidate() && genderValidate() && phonenoValidate() && addressValidate() && skillsValidate() && cityValidate() && stateValidate() && countryValidate()){
   console.log("True")
+  ButtonClicked()
+  // loadshow();
   sendData()
   return true
 }
@@ -318,7 +325,16 @@ function sendData(){
         })
         .then(res => {
           // document.getElementById("post").innerHTML="Data Inserted"
-          console.log("Data In")
+          return res.json()
+        })
+        .then(json => {
+      
+          console.log("Data Inserted! Insert ID: "+json["insertId"])
+          setTimeout(()=>{
+            // RestoreSubmitButton()
+            RestoreSubmitButton();
+          },2000)
+          
         })
         .catch(err=>{
           console.log("Error")
@@ -328,3 +344,19 @@ function sendData(){
 }
 
 
+
+function ButtonClicked()
+{
+   document.getElementById("formsubmitbutton").style.display = "none"; // to undisplay
+   document.getElementById("buttonreplacement").style.display = ""; // to display
+   return true;
+}
+
+function RestoreSubmitButton()
+{
+ 
+   document.getElementById("formsubmitbutton").style.display = ""; // to display
+   document.getElementById("buttonreplacement").style.display = "none"; // to undisplay
+   return true;
+}
+// To disable restoring submit button, disable or delete next line.

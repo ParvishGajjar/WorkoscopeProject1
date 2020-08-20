@@ -85,7 +85,7 @@ app.post('/api/add',function(req,res){
         getskillID(id,item);
       })
       
-      res.send("Data In")
+      res.send(result)
       // skill_emp(result['insertId'])
    });
     function getskillID(id,sname)
