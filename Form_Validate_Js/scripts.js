@@ -1,12 +1,7 @@
-
-
-// SELECTING ALL TEXT ELEMENTS
-// var vform = document.getElementById('vform');
-
 var username = document.forms['vform']['username'];
 var lname = document.forms['vform']['lname'];
 var dob = document.forms['vform']['dob'];
-var gender = document.forms['vform']['gender[]'];
+var gender = document.forms['vform']['gender'];
 var email = document.forms['vform']['email'];
 var phone = document.forms['vform']['phone'];
 var add = document.forms['vform']['add'];
@@ -27,6 +22,7 @@ var skill_error = document.getElementById('skill_error');
 var city_error = document.getElementById('city_error');
 var state_error = document.getElementById('state_error');
 var country_error = document.getElementById('country_error');
+// document.forms['vform'].addEventListener('load',getSkill,true)
 
 
 // SETTING ALL EVENT LISTENERS
@@ -43,6 +39,7 @@ document.getElementById("city_div").addEventListener('blur',cityValidate,true);
 document.getElementById("state_div").addEventListener('blur',stateValidate,true);
 document.getElementById("country_div").addEventListener('blur',countryValidate,true);
 
+//fetch  skill function
 function getSkill(){
         fetch('http://localhost:3000/api/skills')
         .then(response => {
@@ -54,38 +51,43 @@ function getSkill(){
           data.forEach((item)=>{
             console.log(item["Skill_name"]);
             // document.getElementById("Skillset").innerHTML=`<input type="checkbox" name="skill" value="${item["Skill_name"]}">${item["Skill_name"]}`
-             var hold = document.getElementById("Skillset");
-         var checkbox = document.createElement('input');
-          checkbox.setAttribute("type","checkbox","value",item["Skill_name"]);
-         var label = document.createElement('label');
-         var tn = document.createTextNode(item["Skill_name"]);
-         label.appendChild(tn); 
-         hold.appendChild(label);
-         hold.appendChild(checkbox);
+            var hold = document.getElementById("Skillset");
+            var checkbox = document.createElement('input');
+            checkbox.setAttribute("type","checkbox");
+            checkbox.setAttribute("value",item["Skill_name"]);
+            var label = document.createElement('label');
+            var tn = document.createTextNode(item["Skill_name"]);
+            label.appendChild(tn); 
+            hold.appendChild(label);
+            hold.appendChild(checkbox);
           })
         })
         .catch(err=>console.log("Skill not fetched"))
       }
 
+
+
 // validation function
 function Validate() {
-usernameValidate();
-lastnameValidate();
-DOBValidate();
-emailValidate();
-genderValidate();
-phonenoValidate();
-addressValidate();
-skillsValidate();
-cityValidate();
-stateValidate();
-countryValidate();
-if(usernameValidate() && lastnameValidate() && DOBValidate() && emailValidate() && genderValidate() && phonenoValidate() && addressValidate() && skillsValidate() && cityValidate() && stateValidate() && countryValidate()){
-  console.log("True")
-  sendData()
-  return true
-}
-return false
+  event.preventDefault();
+  console.log("Inside Validate")
+  usernameValidate();
+  lastnameValidate();
+  DOBValidate();
+  emailValidate();
+  genderValidate();
+  phonenoValidate();
+  addressValidate();
+  skillsValidate();
+  cityValidate();
+  stateValidate();
+  countryValidate();
+  if(usernameValidate() && lastnameValidate() && DOBValidate() && emailValidate() && genderValidate() && phonenoValidate() && addressValidate() && skillsValidate() && cityValidate() && stateValidate() && countryValidate()){
+    console.log("True")
+    sendData()
+    return true
+  }
+  return false
 }
 
 
@@ -245,6 +247,7 @@ function genderValidate(){
 // var things = document.querySelectorAll("[type='radio']");
 // for (var i = 0; i < things.length; i++) {
 //    things[i].addEventListener("click", function () {
+  console.log(gender)
     if (!(gender[0].checked || gender[1].checked)) {
       console.log("error")
     // gender.style.border = "1px solid red";
@@ -279,9 +282,9 @@ function skillsValidate() {
 
 function sendData(){
 
-              event.preventDefault();
-              var formData = new FormData(myForm),
-              result = {};
+        event.preventDefault();
+        var formData = new FormData(vform);
+        result = {};
         for (var entry of formData.entries())
               {
                 result[entry[0]] = entry[1];
@@ -299,6 +302,7 @@ function sendData(){
             ...result,
             'Skills': result2
         };
+        console.log(post_data)
         fetch('http://localhost:3000/api/add', {
           method: 'POST',
           headers: {
