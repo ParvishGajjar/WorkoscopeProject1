@@ -73,7 +73,7 @@ app.get('/api/users/:name', function (req, res) {
    });
 })
 app.post('/api/add',function(req,res){
-	connection.query(`INSERT into employee (Firstname,Lastname,email,DOB,Phoneno,Address) values ('${req.body.username}','${req.body.lname}','${req.body.email}','${req.body.dob}','${req.body.phone}','${req.body.add}');`, (err,result) => {    // () anonymous function passing arguement err and rows 
+  connection.query(`INSERT into employee (Firstname,Lastname,email,DOB,Phoneno,Address) values ('${req.body.username}','${req.body.lname}','${req.body.email}','${req.body.dob}','${req.body.phone}','${req.body.add}');`, (err,result) => {    // () anonymous function passing arguement err and rows 
       if(err) 
       {
          throw err;
@@ -84,7 +84,8 @@ app.post('/api/add',function(req,res){
       req.body.Skills.forEach((item)=>{
         getskillID(id,item);
       })
-      res.send("<p>Data Inserted<p>")
+      
+      res.send("Data In")
       // skill_emp(result['insertId'])
    });
     function getskillID(id,sname)
@@ -113,9 +114,9 @@ app.post('/api/add',function(req,res){
 })
 
 app.listen(3000,(err)=>{
-	if(err)
-	{
-		console.log(err);
-	}
-	console.log("Running!")
+  if(err)
+  {
+    console.log(err);
+  }
+  console.log("Running!")
 });
