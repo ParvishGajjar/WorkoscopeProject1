@@ -1,3 +1,8 @@
+
+
+// SELECTING ALL TEXT ELEMENTS
+// var vform = document.getElementById('vform');
+
 var username = document.forms['vform']['username'];
 var lname = document.forms['vform']['lname'];
 var dob = document.forms['vform']['dob'];
@@ -51,15 +56,15 @@ function getSkill(){
           data.forEach((item)=>{
             console.log(item["Skill_name"]);
             // document.getElementById("Skillset").innerHTML=`<input type="checkbox" name="skill" value="${item["Skill_name"]}">${item["Skill_name"]}`
-            var hold = document.getElementById("Skillset");
-            var checkbox = document.createElement('input');
-            checkbox.setAttribute("type","checkbox");
-            checkbox.setAttribute("value",item["Skill_name"]);
-            var label = document.createElement('label');
-            var tn = document.createTextNode(item["Skill_name"]);
-            label.appendChild(tn); 
-            hold.appendChild(label);
-            hold.appendChild(checkbox);
+             var hold = document.getElementById("Skillset");
+         var checkbox = document.createElement('input');
+          checkbox.setAttribute("type","checkbox");
+          checkbox.setAttribute("value",item["Skill_name"]);
+         var label = document.createElement('label');
+         var tn = document.createTextNode(item["Skill_name"]);
+         label.appendChild(tn); 
+         hold.appendChild(label);
+         hold.appendChild(checkbox);
           })
         })
         .catch(err=>console.log("Skill not fetched"))
@@ -71,23 +76,24 @@ function getSkill(){
 function Validate() {
   event.preventDefault();
   console.log("Inside Validate")
-  usernameValidate();
-  lastnameValidate();
-  DOBValidate();
-  emailValidate();
-  genderValidate();
-  phonenoValidate();
-  addressValidate();
-  skillsValidate();
-  cityValidate();
-  stateValidate();
-  countryValidate();
-  if(usernameValidate() && lastnameValidate() && DOBValidate() && emailValidate() && genderValidate() && phonenoValidate() && addressValidate() && skillsValidate() && cityValidate() && stateValidate() && countryValidate()){
-    console.log("True")
-    sendData()
-    return true
-  }
-  return false
+usernameValidate();
+lastnameValidate();
+DOBValidate();
+emailValidate();
+
+genderValidate();
+phonenoValidate();
+addressValidate();
+skillsValidate();
+cityValidate();
+stateValidate();
+countryValidate();
+if(usernameValidate() && lastnameValidate() && DOBValidate() && emailValidate() && genderValidate() && phonenoValidate() && addressValidate() && skillsValidate() && cityValidate() && stateValidate() && countryValidate()){
+  console.log("True")
+  sendData()
+  return true
+}
+return false
 }
 
 
@@ -282,9 +288,9 @@ function skillsValidate() {
 
 function sendData(){
 
-        event.preventDefault();
-        var formData = new FormData(vform);
-        result = {};
+              event.preventDefault();
+              var formData = new FormData(vform),
+              result = {};
         for (var entry of formData.entries())
               {
                 result[entry[0]] = entry[1];
@@ -321,36 +327,4 @@ function sendData(){
         // result=JSON.stringify(result)
 }
 
-
-    //     // window.onload=function(){
-    //     var myForm = document.getElementById('vform');
-       
-    //       event.preventDefault();
-    //       var formData = new FormData(myForm),
-    //       result = {};
-
-
-    //       for (var entry of formData.entries())
-    //       {
-    //         result[entry[0]] = entry[1];
-    //       }
-    //        result1 = JSON.stringify(result)
-    //       // console.log(result);
-    //       // document.getElementById("md").innerHTML=result1;
-    //         result1=[]
-    //  var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-    //   for (var checkbox of checkboxes) {
-    //     // document.body.append(checkbox.value + ' ');
-    //     result1.push(checkbox.value)
-    //    }
-    // // result=JSON.stringify(result);
-    // const result2={
-    //   ...result,
-    //   'Skills':result1[1]
-    // }
-    // result3=JSON.stringify(result2);
-    // document.getElementById("mmd").innerHTML=result3;
-    //   console.log(result2);
-
-    //   }
 
