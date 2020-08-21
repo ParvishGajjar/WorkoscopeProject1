@@ -1,4 +1,9 @@
 <html lang="en">
+<head>
+   <meta charset="UTF-8">
+  <title>Form validation with JavaScript</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body style="background-color: black">
   <div id="wrapper">
    <form  method="POST" id="vform" onsubmit="Validate()"  name="vform"  >
@@ -123,9 +128,14 @@
   <img src="http://www.willmaster.com/images/preload.gif" alt="loading..." style="padding-left: 180px;">
 </div>
     </fieldset>
-    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="scripts.js"></script>
     <p id="post"></p>
    </form>
+   <form onsubmit="search()">
+    Name: <input type="text" name="name" id="name" required><br>
+    <input type="submit" value="Submit">
+  </form>
+  <p id="searched"></p>
   </div>
 </body>
 </html>
