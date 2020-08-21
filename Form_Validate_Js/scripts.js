@@ -411,7 +411,11 @@ function search(){
     .then(res => res.json())
     .then(data => {
       console.log(data)
-      document.getElementById("searched").innerHTML = JSON.stringify(data);
+      for(let i=0;i<data.length;i++){
+        document.getElementById("searched").innerHTML += `<li>Employee ID: ${data[i]["Emp_id"]}<br> Employee Name: ${data[i]["Firstname"]}<br> Skills: ${data[i]["Skills"]} </li><br>`;
+      }
+      // console.log(list)
+      // document.getElementById("searched").innerHTML = list;
     })
     .catch(err=>{
       console.log("Error")
