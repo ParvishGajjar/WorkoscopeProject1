@@ -98,6 +98,7 @@ if(usernameValidate() && lastnameValidate() && DOBValidate() && emailValidate() 
   ButtonClicked()
   // loadshow();
   sendData()
+
   return true
 }
 return false
@@ -315,7 +316,7 @@ function sendData(){
             ...result,
             'Skills': result2
         };
-        console.log(post_data)
+        // console.log(post_data)
         fetch('http://localhost:3000/api/add', {
           method: 'POST',
           headers: {
@@ -325,19 +326,32 @@ function sendData(){
         })
         .then(res => {
           // document.getElementById("post").innerHTML="Data Inserted"
+          console.log("then 1")
+          // console.log("Data Inserted! Insert ID: "+res["insertId"]);
+
+          // RestoreSubmitButton();
           return res.json()
+         
         })
-        .then(json => {
+        .then(res => {
+
+          // document.getElementById("post").innerHTML="Data Inserted"
+          console.log("then 2")
+          // console.log("Data Inserted! Insert ID: "+res["insertId"]);
+          RestoreSubmitButton();
+          document.getElementById("post").innerHTML="Data Inserted"
+         
+         
+        })
+        // .then(json => {
       
-          console.log("Data Inserted! Insert ID: "+json["insertId"])
-          setTimeout(()=>{
-            // RestoreSubmitButton()
-            RestoreSubmitButton();
-          },2000)
-          
-        })
+        //   console.log("Data Inserted! Insert ID: "+json["insertId"]);
+        //               RestoreSubmitButton();
+        // })
         .catch(err=>{
           console.log("Error")
+          RestoreSubmitButton();
+
           document.getElementById("post").innerHTML = "Sorry! Error Detected";
         })  
         // result=JSON.stringify(result)
@@ -354,6 +368,7 @@ function ButtonClicked()
 
 function RestoreSubmitButton()
 {
+  console.log("Inside Restore button");
  
    document.getElementById("formsubmitbutton").style.display = ""; // to display
    document.getElementById("buttonreplacement").style.display = "none"; // to undisplay

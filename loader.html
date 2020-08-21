@@ -1,36 +1,70 @@
 <!DOCTYPE Html>
+<head>
+  <meta charset="UTF-8">
+  <title>Loader</title>
+  <style type="text/css">
+
+  	body, html {
+    height: 100%;
+    text-align: center;
+}
+
+body {
+  background-color: #242F3F;
+}
+
+
+.loader {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  border: 4px solid #Fff;
+  top: 50%;
+  animation: loader 2s infinite ease;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  
+  25% {
+    transform: rotate(180deg);
+  }
+  
+  50% {
+    transform: rotate(180deg);
+  }
+  
+  75% {
+    transform: rotate(360deg);
+  }
+  
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+</style>
+</head>
 <body>
 
-<div id="formsubmitbutton">
-<input type="submit" name="submitter" value="Submit Button" onclick="ButtonClicked()">
-</div>
-<div id="buttonreplacement" style="margin-left:30px; display:none;">
-<img src="http://www.willmaster.com/images/preload.gif" alt="loading...">
-</div>
+<span class="loader"></span>
 
 </body>
 </html>
 
-<script type="text/javascript">
 
-function ButtonClicked()
-{
-   document.getElementById("formsubmitbutton").style.display = "none"; // to undisplay
-   document.getElementById("buttonreplacement").style.display = ""; // to display
-   return true;
-}
-var FirstLoading = true;
-function RestoreSubmitButton()
-{
-   if( FirstLoading )
-   {
-      FirstLoading = false;
-      return;
-   }
-   document.getElementById("formsubmitbutton").style.display = ""; // to display
-   document.getElementById("buttonreplacement").style.display = "none"; // to undisplay
-}
-// To disable restoring submit button, disable or delete next line.
-document.onfocus = RestoreSubmitButton;
+<div id="loading">
+  <img id="loading-image" src="images/ajax-loader.gif" alt="Loading..." />
+</div>
+
+<script>
+  $(window).load(function() {
+    $('#loading').hide();
+  });
 </script>
 
