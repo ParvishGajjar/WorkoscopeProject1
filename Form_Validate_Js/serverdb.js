@@ -77,7 +77,7 @@ app.get('/api/users/:name', function (req, res) {
    });
 })
 app.post('/api/add',function(req,res){
-  connection.query(`INSERT into employee (Firstname,Lastname,email,DOB,Phoneno,Address) values ('${req.body.username}','${req.body.lname}','${req.body.email}','${req.body.dob}','${req.body.phone}','${req.body.add}');`, (err,result) => {    // () anonymous function passing arguement err and rows 
+  connection.query(`INSERT into employee (Firstname,Lastname,email,DOB,Phoneno,Address,City,State,Country) values ('${req.body.username}','${req.body.lname}','${req.body.email}','${req.body.dob}','${req.body.phone}','${req.body.add}','${req.body.city}','${req.body.state}','${req.body.country}');`, (err,result) => {    // () anonymous function passing arguement err and rows 
       if(err) 
       {
          throw err;
