@@ -98,15 +98,7 @@ if(usernameValidate() && lastnameValidate() && DOBValidate() && emailValidate() 
   ButtonClicked()
   // loadshow();
   sendData()
-  .then(fetchapi())
-  .then(data=>{
-    console.log(data)
-    RestoreSubmitButton();
-  })
-  .catch((err)=>{
-    RestoreSubmitButton();
-    console.log(err)
-  })
+
   return true
 }
 return false
@@ -303,7 +295,6 @@ function skillsValidate() {
 }
 
 function sendData(){
-  return new Promise((resolve,reject)=>{
 
               event.preventDefault();
               var formData = new FormData(vform),
@@ -325,67 +316,47 @@ function sendData(){
             ...result,
             'Skills': result2
         };
-        if(post_data === ""){
-          reject("No Data")
-        }
-        resolve(post_data)
         // console.log(post_data)
-        // const fetchapi=fetch('http://localhost:3000/api/add', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-type': 'application/json'
-        //   },
-        //   body: JSON.stringify(post_data)
-        // })
-        // .then(res => {
-        //   // document.getElementById("post").innerHTML="Data Inserted"
-        //   console.log("then 1")
-        //   // console.log("Data Inserted! Insert ID: "+res["insertId"]);
-
-        //   // RestoreSubmitButton();
-        //   resolve(res.json())
-         
-        // })
-        // .then(res => {
-
-        //   // document.getElementById("post").innerHTML="Data Inserted"
-        //   console.log("then 2")
-        //   // console.log("Data Inserted! Insert ID: "+res["insertId"]);
-        //   RestoreSubmitButton();
-        //   document.getElementById("post").innerHTML="Data Inserted"
-         
-         
-        // })
-        // .then(json => {
-      
-        //   console.log("Data Inserted! Insert ID: "+json["insertId"]);
-        //               RestoreSubmitButton();
-        // })
-        // .catch(err=>{
-          // console.log("Error")
-          // RestoreSubmitButton();
-          // reject(err)
-          // document.getElementById("post").innerHTML = "Sorry! Error Detected";
-        // })  
- })       // result=JSON.stringify(result)
-}
-
-function fetchapi(post_data){
-
-    fetch('http://localhost:3000/api/add', {
+        fetch('http://localhost:3000/api/add', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json'
           },
           body: JSON.stringify(post_data)
-        }).then((res)=>{
+        })
+        .then(res => {
+          // document.getElementById("post").innerHTML="Data Inserted"
+          console.log("then 1")
+          // console.log("Data Inserted! Insert ID: "+res["insertId"]);
+
+          // RestoreSubmitButton();
           return res.json()
+         
         })
-        .catch((err)=>{
-          console.log("Error Detected in posting data");
-          return err
+        .then(res => {
+
+          // document.getElementById("post").innerHTML="Data Inserted"
+          console.log("then 2")
+          // console.log("Data Inserted! Insert ID: "+res["insertId"]);
+          RestoreSubmitButton();
+          document.getElementById("post").innerHTML="Data Inserted"
+         
+         
         })
+        // .then(json => {
+      
+        //   console.log("Data Inserted! Insert ID: "+json["insertId"]);
+        //               RestoreSubmitButton();
+        // })
+        .catch(err=>{
+          console.log("Error")
+          RestoreSubmitButton();
+
+          document.getElementById("post").innerHTML = "Sorry! Error Detected";
+        })  
+        // result=JSON.stringify(result)
 }
+
 
 
 function ButtonClicked()
@@ -404,6 +375,7 @@ function RestoreSubmitButton()
    return true;
 }
 // To disable restoring submit button, disable or delete next line.
+// To disable restoring submit button, disable or delete next line.
 function search(){
     event.preventDefault();
     const searchparam=document.getElementById("name").value;
@@ -411,7 +383,11 @@ function search(){
     .then(res => res.json())
     .then(data => {
       console.log(data)
-      document.getElementById("searched").innerHTML = JSON.stringify(data);
+      for(let i=0;i<data.length;i++){
+        document.getElementById("searched").innerHTML += `<li>Employee ID: ${data[i]["Emp_id"]}<br> Employee Name: ${data[i]["Firstname"]}<br> Skills: ${data[i]["Skills"]} </li><br>`;
+      }
+      // console.log(list)
+      // document.getElementById("searched").innerHTML = list;
     })
     .catch(err=>{
       console.log("Error")

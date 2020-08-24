@@ -63,7 +63,7 @@ app.get('/api/skills', function (req, res) {
 //Get User's data by passing parameter which would have sublestring from his name
 app.get('/api/users/:name', function (req, res) {
    const nameparam=req.params.name;
-   connection.query("Select employee.Emp_id, employee.Firstname, GROUP_CONCAT( Distinct skill.skill_name) AS 'Skills' from employee left join skill_emp ON employee.Emp_id = skill_emp.Emp_id left join skill ON skill_emp.Skill_id = skill.Skill_id where Firstname LIKE '%"+nameparam+"%' group by Emp_id;", (err,rows) => {    // () anonymous function passing arguement err and rows 
+   connection.query("SELECT * FROM UserData where username LIKE '%"+nameparam+"%';", (err,rows) => {    // () anonymous function passing arguement err and rows 
       if(err) 
       {
          throw err;
@@ -84,8 +84,8 @@ app.post('/api/add',function(req,res){
       req.body.Skills.forEach((item)=>{
         getskillID(id,item);
       })
-      // res.setHeader("Content-Type", "application/json");
-      res.json().send(result)
+      
+      res.send(result)
       // skill_emp(result['insertId'])
    });
     function getskillID(id,sname)
