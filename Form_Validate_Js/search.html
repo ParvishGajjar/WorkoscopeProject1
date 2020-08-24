@@ -4,12 +4,15 @@
 	<title></title>
 	 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body  style="background-color: black">
+ <div id="wrapper">
+ 	 <h1 style="text-align: center">Wanna search something</h1>
   <form onsubmit="search()">
-  	   First Name : <input type="text" name="name" id="name" required><br>
-    <input type="submit" value="Submit"> 
+  	   Search: <input type="text" name="name" id="name" placeholder ="Search Anything you want" required><br><br>
+    <input type="submit" value="Submit" class="btn"> 
   </form>
   <ul id="searched"></ul>
+</div>
 </body>
 </html>
 <script type="text/javascript" src="scripts.js"></script>
