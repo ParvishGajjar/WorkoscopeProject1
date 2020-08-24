@@ -67,7 +67,13 @@ app.get('/api/skills', function (req, res) {
 //Get User's data by passing parameter which would have sublestring from his name
 app.get('/api/users/:name', function (req, res) {
    const nameparam=req.params.name;
-   connection.query("Select employee.Emp_id, employee.Firstname, GROUP_CONCAT( Distinct skill.skill_name) AS 'Skills' from employee left join skill_emp ON employee.Emp_id = skill_emp.Emp_id left join skill ON skill_emp.Skill_id = skill.Skill_id where Firstname LIKE '%"+nameparam+"%' group by Emp_id;", (err,rows) => {    // () anonymous function passing arguement err and rows 
+   connection.query(`Select employee.Emp_id, employee.Firstname, employee.Lastname, employee.Email, employee.Phoneno,employee.DOB, employee.Address,
+    employee.City,employee.State, employee.Country, GROUP_CONCAT( Distinct skill.skill_name) AS 'Skills' from employee 
+    left join skill_emp ON employee.Emp_id = skill_emp.Emp_id left join skill ON skill_emp.Skill_id = skill.Skill_id 
+    where  employee.Firstname LIKE "%${nameparam}%" OR employee.Lastname LIKE "%${nameparam}%" OR employee.Email LIKE "%${nameparam}%" 
+    OR employee.Phoneno LIKE "%${nameparam}%" OR employee.DOB LIKE "%${nameparam}%" OR employee.Address LIKE "%${nameparam}%" 
+    OR employee.City LIKE "%${nameparam}%" OR employee.State LIKE "%${nameparam}%" 
+    OR skill.skill_name LIKE "%${nameparam}%" group by Emp_id;`, (err,rows) => {    // () anonymous function passing arguement err and rows 
       if(err) 
       {
          throw err;
