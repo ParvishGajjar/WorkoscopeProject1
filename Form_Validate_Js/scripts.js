@@ -376,24 +376,24 @@ function RestoreSubmitButton()
 }
 // To disable restoring submit button, disable or delete next line.
 // To disable restoring submit button, disable or delete next line.
-function search(){
-    event.preventDefault();
-    const searchparam=document.getElementById("name").value;
-    fetch('/api/users/'+searchparam)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      for(let i=0;i<data.length;i++){
-        document.getElementById("searched").innerHTML += `<li>Employee ID: ${data[i]["Emp_id"]}<br> Employee Name: ${data[i]["Firstname"]}<br> Skills: ${data[i]["Skills"]} </li><br>`;
-      }
-      // console.log(list)
-      // document.getElementById("searched").innerHTML = list;
-    })
-    .catch(err=>{
-      console.log("Error")
-      document.getElementById("searched").innerHTML = "Sorry! Error Detected";
-    })
-  }
+// function search(){
+//     event.preventDefault();
+//     const searchparam=document.getElementById("name").value;
+//     fetch('/api/users/'+searchparam)
+//     .then(res => res.json())
+//     .then(data => {
+//       console.log(data)
+//       for(let i=0;i<data.length;i++){
+//         document.getElementById("searched").innerHTML += `<li></li><br>`;
+//       }
+//       // console.log(list)
+//       // document.getElementById("searched").innerHTML = list;
+//     })
+//     .catch(err=>{
+//       console.log("Error")
+//       document.getElementById("searched").innerHTML = "Sorry! Error Detected";
+//     })
+//   }
   function search(){
     event.preventDefault();
      document.getElementById("searched").innerHTML=""
@@ -403,7 +403,12 @@ function search(){
     .then(data => {
       console.log(data)
       for(let i=0;i<data.length;i++){
-        document.getElementById("searched").innerHTML += `<li>Employee ID: ${data[i]["Emp_id"]}<br> Employee Name: ${data[i]["Firstname"]}<br> Skills: ${data[i]["Skills"]} </li><br>`;
+        document.getElementById("searched").innerHTML += `<div class="view">
+    <h4>Employee ID: ${data[i]["Emp_id"]}<br> Name: ${data[i]["Firstname"]} ${data[i]["Lastname"]}<br>Phone Number: ${data[i]["Phoneno"]}<br>
+    Email ID: ${data[i]["Email"]}<br>
+     Address: ${data[i]["Address"]}<br>
+     Skills: ${data[i]["Skills"]} </h4>
+  </div>`;
       }
       // console.log(list)
       // document.getElementById("searched").innerHTML = list;
