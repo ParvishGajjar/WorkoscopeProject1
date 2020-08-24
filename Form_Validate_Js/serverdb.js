@@ -19,8 +19,12 @@ connection.connect(function(err) {
 
   console.log('Connected to the MySQL server.');
 });
-
 app.get('/',function(req,res) {
+  res.sendFile(path.join(__dirname + '/main.html'));
+
+});
+
+app.get('/main.html',function(req,res) {
   res.sendFile(path.join(__dirname + '/main.html'));
 
 });

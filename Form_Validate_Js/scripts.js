@@ -404,6 +404,7 @@ function RestoreSubmitButton()
       console.log(data)
       for(let i=0;i<data.length;i++){
         document.getElementById("searched").innerHTML += `<div class="view">
+    <p style="text-align:right"><a href="main.html"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></p>
     <h4>Employee ID: ${data[i]["Emp_id"]}<br> Name: ${data[i]["Firstname"]} ${data[i]["Lastname"]}<br>Phone Number: ${data[i]["Phoneno"]}<br>
     Email ID: ${data[i]["Email"]}<br>
      Address: ${data[i]["Address"]}<br>
