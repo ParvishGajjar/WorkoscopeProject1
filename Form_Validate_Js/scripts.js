@@ -405,7 +405,7 @@ function RestoreSubmitButton()
      
       for(let i=0;i<data.length;i++){
     document.getElementById("searched").innerHTML += `<div class="view">
-    <p style="text-align:right">${data[i]["Emp_id"]}<a href="main.html"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></p>
+    <p style="text-align:right"><div id="${data[i]["Emp_id"]}" onclick="log(${data[i]["Emp_id"]})"><i class="fa fa-pencil-square" aria-hidden="true" ></i></div></p>
     <h4>Employee ID: ${data[i]["Emp_id"]}<br> Name: ${data[i]["Firstname"]} ${data[i]["Lastname"]}<br>Phone Number: ${data[i]["Phoneno"]}<br>
     Email ID: ${data[i]["Email"]}<br>
      Address: ${data[i]["Address"]}<br>
@@ -420,4 +420,16 @@ function RestoreSubmitButton()
       console.log("Error")
       document.getElementById("searched").innerHTML = "Sorry! Error Detected";
     })
+  }
+  //Not happening by using EVENT
+  // function log(event){
+  //   event.preventDefault();
+  //   // console.log(event)
+  //   console.log(event.target.id)
+  // }
+
+    function log(id){
+    // event.preventDefault();
+    console.log(id)
+    // console.log(event.target.id)
   }
