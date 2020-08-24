@@ -32,6 +32,10 @@ app.get('/scripts.js',function(req,res) {
  
   res.sendFile(path.join(__dirname + '/scripts.js'));
 });
+app.get('/search.html',function(req,res) {
+ 
+  res.sendFile(path.join(__dirname + '/search.html'));
+});
 
 app.get('/api/users', function (req, res) {
    connection.query('SELECT * FROM UserData;', (err,rows) => {    // () anonymous function passing arguement err and rows 
@@ -84,8 +88,8 @@ app.post('/api/add',function(req,res){
       req.body.Skills.forEach((item)=>{
         getskillID(id,item);
       })
-      // res.setHeader("Content-Type", "application/json");
-      res.json().send(result)
+      
+      res.send(result)
       // skill_emp(result['insertId'])
    });
     function getskillID(id,sname)
