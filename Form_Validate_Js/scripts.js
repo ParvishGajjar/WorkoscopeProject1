@@ -59,7 +59,8 @@ function getSkill(){
              var hold = document.getElementById("Skillset");
          var checkbox = document.createElement('input');
           checkbox.setAttribute("type","checkbox");
-          checkbox.setAttribute("value",item["Skill_name"]);
+          checkbox.setAttribute("value",item["Skill_id"]);
+
          var label = document.createElement('label');
          var tn = document.createTextNode(item["Skill_name"]);
          label.appendChild(tn); 
@@ -431,5 +432,15 @@ function RestoreSubmitButton()
     function log(id){
     // event.preventDefault();
     console.log(id)
+    fetch('/api/prefill/'+id)
+    .then(response=> response.json())
+    .then(data=>{
+      console.log(data);
+   
+    })
+    .catch(err=>{
+      console.log(err)
+    })
     // console.log(event.target.id)
   }
+

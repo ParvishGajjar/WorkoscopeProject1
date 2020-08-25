@@ -42,7 +42,7 @@ app.get('/search.html',function(req,res) {
 });
 
 app.get('/api/users', function (req, res) {
-   connection.query('SELECT * FROM UserData;', (err,rows) => {    // () anonymous function passing arguement err and rows 
+   connection.query('SELECT * FROM employee;', (err,rows) => {    // () anonymous function passing arguement err and rows 
       if(err) 
       {
          throw err;
@@ -52,8 +52,9 @@ app.get('/api/users', function (req, res) {
   
    });
 })
+
 app.get('/api/skills', function (req, res) {
-   connection.query('SELECT Skill_name FROM Skill;', (err,rows) => {    // () anonymous function passing arguement err and rows 
+   connection.query('SELECT * FROM Skill;', (err,rows) => {    // () anonymous function passing arguement err and rows 
       if(err) 
       {
          throw err;
@@ -125,6 +126,36 @@ app.post('/api/add',function(req,res){
       // skill_emp(result['insertId'])
    });
   }
+})
+//Getdata to prefill the form
+app.get('/api/prefill/:id',(req,res)=>{
+   const empid=req.params.id;
+   connection.query(`Select employee.Emp_id, employee.Firstname, employee.Lastname, employee.Email, employee.Phoneno,employee.DOB, employee.Gender, employee.Address,
+    employee.City,employee.State, employee.Country, GROUP_CONCAT( skill.skill_name) AS 'Skills' from employee 
+    left join skill_emp ON employee.Emp_id = skill_emp.Emp_id left join skill ON skill_emp.Skill_id = skill.Skill_id 
+    where employee.Emp_id = "${empid}";`, (err,rows) => {    // () anonymous function passing arguement err and rows 
+      if(err) 
+      {
+         throw err;
+      }
+      console.log(rows);
+      console.log("Data received from Db of Employee with  ID: " + empid);
+      res.end(JSON.stringify(rows));
+   });
+})
+
+//update user's data
+app.post('/api/updatedata',(req,res)=>{
+  connection.query(`update employee set Firstname='${req.body.username}', Lastname='${req.body.lname}',
+   Email='${req.body.email}', DOB='${req.body.dob}', Phoneno='${req.body.phone}', Address='${req.body.add}', 
+   City='${req.body.city}',State='${req.body.state}',Country='${req.body.country}, Gender='${req.body.gender}' where Emp_id='${req.body.id}';`,(err,result)=>{
+    if(err)
+    {
+      throw err;
+    }
+    console.log("Data Updated")
+    res.send(result);
+  })
 })
 
 app.listen(3000,(err)=>{
