@@ -72,7 +72,7 @@ app.get('/api/skills', function (req, res) {
 app.get('/api/users/:name', function (req, res) {
    const nameparam=req.params.name;
    connection.query(`Select employee.Emp_id, employee.Firstname, employee.Lastname, employee.Email, employee.Phoneno,employee.DOB, employee.Address,
-    employee.City,employee.State, employee.Country, GROUP_CONCAT( Distinct skill.skill_name) AS 'Skills' from employee 
+    employee.City,employee.State, employee.Country, GROUP_CONCAT(  skill.skill_name separator '|') AS 'Skills' from employee 
     left join skill_emp ON employee.Emp_id = skill_emp.Emp_id left join skill ON skill_emp.Skill_id = skill.Skill_id 
     where  employee.Firstname LIKE "%${nameparam}%" OR employee.Lastname LIKE "%${nameparam}%" OR employee.Email LIKE "%${nameparam}%" 
     OR employee.Phoneno LIKE "%${nameparam}%" OR employee.DOB LIKE "%${nameparam}%" OR employee.Address LIKE "%${nameparam}%" 
