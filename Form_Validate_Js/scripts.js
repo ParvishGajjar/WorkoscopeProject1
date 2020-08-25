@@ -406,7 +406,7 @@ function RestoreSubmitButton()
      
       for(let i=0;i<data.length;i++){
     document.getElementById("searched").innerHTML += `<div class="view">
-    <p style="text-align:right"><div id="${data[i]["Emp_id"]}" onclick="log(${data[i]["Emp_id"]})"><i class="fa fa-pencil-square" aria-hidden="true" ></i></div></p>
+    <p style="text-align:right"><i class="fa fa-pencil-square" aria-hidden="true" onclick="log(event)" id='${data[i]["Emp_id"]}'></i></p>
     <h4>Employee ID: ${data[i]["Emp_id"]}<br> Name: ${data[i]["Firstname"]} ${data[i]["Lastname"]}<br>Phone Number: ${data[i]["Phoneno"]}<br>
     Email ID: ${data[i]["Email"]}<br>
      Address: ${data[i]["Address"]}<br>
@@ -423,14 +423,9 @@ function RestoreSubmitButton()
     })
   }
   //Not happening by using EVENT
-  // function log(event){
-  //   event.preventDefault();
-  //   // console.log(event)
-  //   console.log(event.target.id)
-  // }
-
-    function log(id){
+  function log(event){
     // event.preventDefault();
+<<<<<<< HEAD
     console.log(id)
     fetch('/api/prefill/'+id)
     .then(response=> response.json())
@@ -444,3 +439,14 @@ function RestoreSubmitButton()
     // console.log(event.target.id)
   }
 
+=======
+    // console.log(event)
+    console.log(event.target.id)
+  }
+
+  //   function log(id){
+  //   // event.preventDefault();
+  //   console.log(id)
+  //   // console.log(event.target.id)
+  // }
+>>>>>>> d2f771902dfc7cd7855ded25254f63f34c130c7d
