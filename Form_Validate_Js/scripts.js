@@ -1,7 +1,7 @@
 
 
 // SELECTING ALL TEXT ELEMENTS
-// var vform = document.getElementById('vform');
+var vform = document.getElementById('vform');
 
 var username = document.forms['vform']['username'];
 var lname = document.forms['vform']['lname'];
@@ -406,7 +406,7 @@ function RestoreSubmitButton()
      
       for(let i=0;i<data.length;i++){
     document.getElementById("searched").innerHTML += `<div class="view">
-    <p style="text-align:right"><i class="fa fa-pencil-square" aria-hidden="true" onclick="log(event)" id='${data[i]["Emp_id"]}'></i></p>
+    <p style="text-align:right"><a href="main.html?id='${data[i]["Emp_id"]}'" ><i class="fa fa-pencil-square" aria-hidden="true" onclick="log(event)" id='${data[i]["Emp_id"]}'></i></a></p>
     <h4>Employee ID: ${data[i]["Emp_id"]}<br> Name: ${data[i]["Firstname"]} ${data[i]["Lastname"]}<br>Phone Number: ${data[i]["Phoneno"]}<br>
     Email ID: ${data[i]["Email"]}<br>
      Address: ${data[i]["Address"]}<br>
@@ -426,26 +426,28 @@ function RestoreSubmitButton()
   function log(event){
     // event.preventDefault();
 
-    console.log(id)
-    fetch('/api/prefill/'+id)
+    console.log(event.target.id)
+    fetch('/api/prefill/'+event.target.id)
     .then(response=> response.json())
     .then(data=>{
-      console.log(data);
-      
+  console.log(data)
+
+  //Localstorage
+     // var d=  localStorage.setItem("Data", data);
+
+     setprefill(d,vform);
     })
     .catch(err=>{
       console.log(err)
     })
     // console.log(event.target.id)
   }
+function setprefill(data,vform){
+  // event.preventDefault();
+  console.log("Hello me "+JSON.stringify(data))
+  console.log(data[0]["Firstname"])
 
-    // console.log(event)
-    // console.log(event.target.id)
-  
-
-  //   function log(id){
-  //   // event.preventDefault();
-  //   console.log(id)
-  //   // console.log(event.target.id)
-  // }
-
+  //Local storage
+    // var data = localStorage.getItem("Data");
+    document.forms['vform']['First'].defaultValue = data[0]["Firstname"];
+}
