@@ -425,7 +425,7 @@ function RestoreSubmitButton()
   //Not happening by using EVENT
   function log(event){
     // event.preventDefault();
-<<<<<<< HEAD
+
     console.log(id)
     fetch('/api/prefill/'+id)
     .then(response=> response.json())
@@ -439,14 +439,13 @@ function RestoreSubmitButton()
     // console.log(event.target.id)
   }
 
-=======
     // console.log(event)
     console.log(event.target.id)
-  }
+  
 
   //   function log(id){
   //   // event.preventDefault();
   //   console.log(id)
   //   // console.log(event.target.id)
   // }
->>>>>>> d2f771902dfc7cd7855ded25254f63f34c130c7d
+
