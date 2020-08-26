@@ -1,5 +1,6 @@
 var express = require('express');
 var _ = require('lodash');
+var moment = require('moment');
 const mysql = require('mysql');
 var path = require('path');
 var app = express();
@@ -163,7 +164,13 @@ function prefillData(){
         {
           throw err;
         }
-
+        var date=moment(rows[0]["DOB"]).format('YYYY-MM-DD');
+        rows[0]["DOB"]=date;
+        const str = rows[0]["Skills"]
+        const arr=_.split(str,'|');
+        // console.log(arr);
+        rows[0]["Skills"]=[];
+        rows[0]["Skills"]=arr;
         console.log(rows);
         console.log("Data received from Db of Employee with  ID: " + empid);
         
@@ -184,6 +191,7 @@ function updateData(){
       {
         throw err;
       }
+
       
       const id=req.body.id;
       console.log("Data Updated");
@@ -269,4 +277,5 @@ function main(){
 
 // Main Function.
 main();
+
 

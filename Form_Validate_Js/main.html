@@ -6,47 +6,47 @@
 </head>
 <body style="background-color: black">
   <div class="container">
-   <form  method="POST" id="vform" onsubmit="Validate()"  name="vform"  >
+   <form  method="GET" id="vform" onsubmit="Validate()"  name="vform"  >
     <fieldset>
     <legend><b><mark>Registration Form</mark></b></legend> 
     <div id="username_div">
       <label>Firstname</label> <br>
-      <input type="text" name="username" class="textInput">
+      <input type="text" name="username" id="fname" value="" class="textInput">
       <div id="name_error"></div>
     </div>
     <br>
     <div id="lname_div">
       <label>Lastname</label> <br>
-      <input type="text" name="lname" class="textInput">
+      <input type="text" name="lname" id="lname" value="" class="textInput">
       <div id="lname_error"></div>
     </div>
     <br>
     <div id="dob_div">
       <label>DOB</label> <br>
-      <input type="date" name="dob" class="textInput">
+      <input type="date" name="dob" id="dob" value="" class="textInput">
       <div id="dob_error"></div>
     </div>
     <br>
     <div id="email_div">
       <label>Email</label> <br>
-      <input type="text" name="email" class="textInput">
+      <input type="text" name="email" id="email" value="" class="textInput">
       <div id="email_error"></div>
     </div>
     <br>
     <div id="gender_div">
       <label>Gender</label>
-      <input type="radio" name="gender" value="Male" >Male
-      <input type="radio" name="gender" value="Female" >Female
+      <input type="radio" name="gender" id="Male" value="Male" >Male
+      <input type="radio" name="gender" id="Female" value="Female" >Female
       <div id="gender_error"></div>
     </div><br/>
       <div id="phone_div">
       <label>Phone Number</label> <br>
-      <input type="text" name="phone" class="textInput">
+      <input type="text" name="phone" id="phone" value="" class="textInput">
       <div id="phone_error"></div>
     </div><br/>
     <div id="add_div">
       <label>Address</label> <br>
-      <textarea type="text" name="add" rows=5 cols=35 ></textarea>
+      <textarea type="text" name="add" id="add" value="" rows=5 cols=35 ></textarea>
       <div id="add_error"></div>
     </div>
     <br>
