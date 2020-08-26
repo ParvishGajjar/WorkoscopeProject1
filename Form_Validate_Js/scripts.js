@@ -84,9 +84,9 @@ function defaultprefill(data){
   console.log(data[0]["Gender"])
   document.getElementById(`${data[0]["Gender"]}`).checked = true;
   console.log(data[0]["Skills"][0])
-  // data[0]["Skills"].forEach((item)=>{
-  //   document.getElementById(`${item}`).checked = true;
-  // })
+  data[0]["Skills"].forEach((item)=>{
+    document.getElementById(`${item}`).checked = true;
+  })
    document.getElementById("country").value = data[0]["Country"];
    document.getElementById("city").value = data[0]["City"];
    document.getElementById("state").value = data[0]["State"];
@@ -367,6 +367,41 @@ function sendData(){
             'Skills': result2
         };
         console.log(post_data)
+        urlp=[];
+        s=window.location.toString().split('?');
+        // s=s[1].split('&');
+        for(i=0;i<s.length;i++)
+        {
+          u=s[i].split('=');
+          urlp[u[0]]=u[1];
+        }
+        // console.log(urlp)
+        if(urlp["id"]!=null){
+            const new_data={
+              ...post_data,
+              'id': urlp["id"]
+            }
+            fetch('/api/updatedata',{
+              method: 'POST',
+              headers: {
+                'Content-type': 'application/json'
+              },
+              body: JSON.stringify(new_data)
+            })
+            .then(res => {
+              return res.json()         
+            })
+            .then(res => {
+              RestoreSubmitButton();
+              document.getElementById("post").innerHTML="Data Updated"     
+            })
+            .catch(err=>{
+              console.log("Error")
+              RestoreSubmitButton();
+              document.getElementById("post").innerHTML = "Sorry! Error Detected";
+            }) 
+          }
+          else{
         fetch('http://localhost:3000/api/add', {
           method: 'POST',
           headers: {
@@ -404,6 +439,7 @@ function sendData(){
 
           document.getElementById("post").innerHTML = "Sorry! Error Detected";
         })  
+      }
         // result=JSON.stringify(result)
 }
 
