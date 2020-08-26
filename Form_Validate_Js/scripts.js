@@ -366,7 +366,7 @@ function sendData(){
             ...result,
             'Skills': result2
         };
-        // console.log(post_data)
+        console.log(post_data)
         fetch('http://localhost:3000/api/add', {
           method: 'POST',
           headers: {
@@ -476,6 +476,7 @@ function RestoreSubmitButton()
     // console.log("hi")
     x=window.location.origin + `main.html?id=${id}`
     window.location.assign(`main.html?id=${id}`)
+
   }
 
    
