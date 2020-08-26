@@ -1,262 +1,273 @@
-var express = require('express');
-var _ = require('lodash');
-var moment = require('moment');
-const mysql = require('mysql');
-var path = require('path');
+var express = require("express");
+var _ = require("lodash");
+var moment = require("moment");
+const mysql = require("mysql");
+var path = require("path");
 var app = express();
-app.use(express.json())
+app.use(express.json());
 
-const connection = mysql.createConnection({ 
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'workone'
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "workone",
 });
 
-connection.connect(function(err) {         
+connection.connect(function (err) {
   if (err) {
-    return console.error('error: ' + err.message);
+    return console.error("error: " + err.message);
   }
 
-  console.log('Connected to the MySQL server.');
+  console.log("Connected to the MySQL server.");
 });
 
 // Send's all files required in our app.
-function sendFiles(){
-
-  app.get('/',function(req,res) {
-    res.sendFile(path.join(__dirname + '/main.html'));
-  });
-  
-  app.get('/main.html',function(req,res) {
-    res.sendFile(path.join(__dirname + '/main.html'));
+function sendFiles() {
+  app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname + "/main.html"));
   });
 
-  app.get('/style.css',function(req,res) {
-    res.sendFile(path.join(__dirname + '/style.css'));
+  app.get("/main.html", function (req, res) {
+    res.sendFile(path.join(__dirname + "/main.html"));
   });
 
-  app.get('/scripts.js',function(req,res) {
-    res.sendFile(path.join(__dirname + '/scripts.js'));
-  });
-  
-  app.get('/search.html',function(req,res) {
-    res.sendFile(path.join(__dirname + '/search.html'));
+  app.get("/style.css", function (req, res) {
+    res.sendFile(path.join(__dirname + "/style.css"));
   });
 
+  app.get("/scripts.js", function (req, res) {
+    res.sendFile(path.join(__dirname + "/scripts.js"));
+  });
+
+  app.get("/search.html", function (req, res) {
+    res.sendFile(path.join(__dirname + "/search.html"));
+  });
 }
 
 // Get all user's data.
-function getEmployeeData(){
-  app.get('/api/users', function (req, res) {
-    connection.query('SELECT * FROM employee;', (err,rows) => {    // () anonymous function passing arguement err and rows 
-      if(err) 
-      {
-         throw err;
+function getEmployeeData() {
+  app.get("/api/users", function (req, res) {
+    connection.query("SELECT * FROM employee;", (err, rows) => {
+      // () anonymous function passing arguement err and rows
+      if (err) {
+        throw err;
       }
-      
-      console.log('Data received from Db');
-      
+
+      console.log("Data received from Db");
+
       res.end(JSON.stringify(rows));
-  
-   });
-  })
+    });
+  });
 }
 
 // Get Skill Data from Skill table.
-function getSkillsData(){
-  app.get('/api/skills', function (req, res) {
-    connection.query('SELECT * FROM Skill;', (err,rows) => {    // () anonymous function passing arguement err and rows 
-      
-      if(err) 
-      {
-         throw err;
+function getSkillsData() {
+  app.get("/api/skills", function (req, res) {
+    connection.query("SELECT * FROM Skill;", (err, rows) => {
+      // () anonymous function passing arguement err and rows
+
+      if (err) {
+        throw err;
       }
-      
-      rows.forEach((item)=>{
+
+      rows.forEach((item) => {
         console.log(item["Skill_name"]);
-      })
-      
+      });
+
       console.log(rows[0]["Skill_name"]);
-      console.log('Skills received from Db');
-      
+      console.log("Skills received from Db");
+
       res.end(JSON.stringify(rows));
-  
     });
-  })
+  });
 }
 
-
 //Get User's data by passing parameter which would have sublestring from his name
-function searchData(){
-  app.get('/api/users/:name', function (req, res) {
-    const nameparam=req.params.name;
-    connection.query(`Select employee.Emp_id, employee.Firstname, employee.Lastname, employee.Email, employee.Phoneno,employee.DOB, employee.Address,
+function searchData() {
+  app.get("/api/users/:name", function (req, res) {
+    const nameparam = req.params.name;
+    connection.query(
+      `Select employee.Emp_id, employee.Firstname, employee.Lastname, employee.Email, employee.Phoneno,employee.DOB, employee.Address,
       employee.City,employee.State, employee.Country, GROUP_CONCAT(  skill.skill_name separator '|') AS 'Skills' from employee 
       left join skill_emp ON employee.Emp_id = skill_emp.Emp_id left join skill ON skill_emp.Skill_id = skill.Skill_id 
       where  employee.Firstname LIKE "%${nameparam}%" OR employee.Lastname LIKE "%${nameparam}%" OR employee.Email LIKE "%${nameparam}%" 
       OR employee.Phoneno LIKE "%${nameparam}%" OR employee.DOB LIKE "%${nameparam}%" OR employee.Address LIKE "%${nameparam}%" 
       OR employee.City LIKE "%${nameparam}%" OR employee.State LIKE "%${nameparam}%" 
-      OR skill.skill_name LIKE "%${nameparam}%" group by Emp_id;`, (err,rows) => {    // () anonymous function passing arguement err and rows 
-      
-      if(err) 
-      {
-         throw err;
-      }
-      
-      console.log('Data received from Db');
-      
-      res.end(JSON.stringify(rows));
-   });
-  })
-}
+      OR skill.skill_name LIKE "%${nameparam}%" group by Emp_id;`,
+      (err, rows) => {
+        // () anonymous function passing arguement err and rows
 
-//Insert User's Data on Form Submission.
-function addData(){
-  app.post('/api/add',function(req,res){
-    connection.query(`INSERT into employee (Firstname,Lastname,email,DOB,Phoneno,Address,City,State,Country,Gender)
-      values ('${req.body.username}','${req.body.lname}','${req.body.email}','${req.body.dob}','${req.body.phone}',
-      '${req.body.add}','${req.body.city}','${req.body.state}','${req.body.country}',
-      '${req.body.gender}');`, (err,result) => {                                                 // () anonymous function passing arguement err and rows 
-      
-      if(err) 
-      {
-        throw err;
-      }
-      console.log(result);
-      
-      id=result["insertId"];
-      console.log(id);
-      
-      // console.log(req.body.Skills)
-      
-      req.body.Skills.forEach((item)=>{
-        skill_emp(id,item);
-      })
-      
-      res.send(result);
-      // skill_emp(result['insertId'])
-    });
-  })
-}
+        if (err) {
+          throw err;
+        }
 
-// Insert Skill's of employee in Skill-Employee Relational Table.
-function skill_emp(id,skill_id){
-  connection.query(`INSERT into Skill_Emp (Emp_id,Skill_id) values (${id},${skill_id});`, (err,result) => {    // () anonymous function passing arguement err and rows 
-    if(err) 
-    {
-      throw err;
-    }
-    console.log(result);
-    // skill_emp(result['insertId'])
+        console.log("Data received from Db");
+
+        res.end(JSON.stringify(rows));
+      }
+    );
   });
 }
 
-// Get user's data to prefill the form.
-function prefillData(){
-  app.get('/api/prefill/:id',(req,res)=>{
-    const empid=req.params.id;
-      connection.query(`Select employee.Emp_id, employee.Firstname, employee.Lastname, employee.Email, employee.Phoneno,employee.DOB, employee.Gender, employee.Address,
-        employee.City,employee.State, employee.Country, GROUP_CONCAT( skill.skill_name separator '|') AS 'Skills' from employee 
-        left join skill_emp ON employee.Emp_id = skill_emp.Emp_id left join skill ON skill_emp.Skill_id = skill.Skill_id 
-        where employee.Emp_id = "${empid}";`, (err,rows) => {    // () anonymous function passing arguement err and rows 
-        if(err) 
-        {
+//Insert User's Data on Form Submission.
+function addData() {
+  app.post("/api/add", function (req, res) {
+    connection.query(
+      `INSERT into employee (Firstname,Lastname,email,DOB,Phoneno,Address,City,State,Country,Gender)
+      values ('${req.body.username}','${req.body.lname}','${req.body.email}','${req.body.dob}','${req.body.phone}',
+      '${req.body.add}','${req.body.city}','${req.body.state}','${req.body.country}',
+      '${req.body.gender}');`,
+      (err, result) => {
+        // () anonymous function passing arguement err and rows
+
+        if (err) {
           throw err;
         }
-        var date=moment(rows[0]["DOB"]).format('YYYY-MM-DD');
-        rows[0]["DOB"]=date;
-        const str = rows[0]["Skills"]
-        const arr=_.split(str,'|');
-        // console.log(arr);
-        rows[0]["Skills"]=[];
-        rows[0]["Skills"]=arr;
-        console.log(rows);
-        console.log("Data received from Db of Employee with  ID: " + empid);
-        
-        res.end(JSON.stringify(rows));
-      });
-  })
+        console.log(result);
+
+        id = result["insertId"];
+        console.log(id);
+
+        // console.log(req.body.Skills)
+
+        req.body.Skills.forEach((item) => {
+          skill_emp(id, item);
+        });
+
+        res.send(result);
+        // skill_emp(result['insertId'])
+      }
+    );
+  });
 }
 
+// Insert Skill's of employee in Skill-Employee Relational Table.
+function skill_emp(id, skill_id) {
+  connection.query(
+    `INSERT into Skill_Emp (Emp_id,Skill_id) values (${id},${skill_id});`,
+    (err, result) => {
+      // () anonymous function passing arguement err and rows
+      if (err) {
+        throw err;
+      }
+      console.log(result);
+      // skill_emp(result['insertId'])
+    }
+  );
+}
+
+// Get user's data to prefill the form.
+function prefillData() {
+  app.get("/api/prefill/:id", (req, res) => {
+    const empid = req.params.id;
+    connection.query(
+      `Select employee.Emp_id, employee.Firstname, employee.Lastname, employee.Email, employee.Phoneno,employee.DOB, employee.Gender, employee.Address,
+        employee.City,employee.State, employee.Country, GROUP_CONCAT( skill.skill_name separator '|') AS 'Skills' from employee 
+        left join skill_emp ON employee.Emp_id = skill_emp.Emp_id left join skill ON skill_emp.Skill_id = skill.Skill_id 
+        where employee.Emp_id = "${empid}";`,
+      (err, rows) => {
+        // () anonymous function passing arguement err and rows
+        if (err) {
+          throw err;
+        }
+        var date = moment(rows[0]["DOB"]).format("YYYY-MM-DD");
+        rows[0]["DOB"] = date;
+        const str = rows[0]["Skills"];
+        const arr = _.split(str, "|");
+        // console.log(arr);
+        rows[0]["Skills"] = [];
+        rows[0]["Skills"] = arr;
+        console.log(rows);
+        console.log("Data received from Db of Employee with  ID: " + empid);
+
+        res.end(JSON.stringify(rows));
+      }
+    );
+  });
+}
 
 // Update user's data.
-function updateData(){
-  app.post('/api/updatedata',(req,res)=>{
-    connection.query(`update employee set Firstname='${req.body.username}', Lastname='${req.body.lname}',
+function updateData() {
+  app.post("/api/updatedata", (req, res) => {
+    connection.query(
+      `update employee set Firstname='${req.body.username}', Lastname='${req.body.lname}',
       Email='${req.body.email}', DOB='${req.body.dob}', Phoneno='${req.body.phone}', Address='${req.body.add}', 
-      City='${req.body.city}',State='${req.body.state}',Country='${req.body.country}, Gender='${req.body.gender}' where Emp_id='${req.body.id}';`,(err,result)=>{
-      
-      if(err)
-      {
+      City='${req.body.city}',State='${req.body.state}',Country='${req.body.country}, Gender='${req.body.gender}' where Emp_id='${req.body.id}';`,
+      (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        const id = req.body.id;
+        console.log("Data Updated");
+
+        const skills = req.body.Skills;
+        skillinsertion(skills, id);
+
+        console.log("Skill Data Updated");
+
+        res.send(result);
+      }
+    );
+  });
+}
+
+// Check's for data to be inserted is already present or not(If not call's for insertion of Skill for an employee and call's for deletion of previous skills).
+function skillinsertion(skillids, id) {
+  connection.query(
+    `select Skill_id from skill_emp where Emp_id='${id}'`,
+    (err, result) => {
+      if (err) {
         throw err;
       }
 
-      
-      const id=req.body.id;
-      console.log("Data Updated");
+      const arr = [];
+      rows.forEach((item) => {
+        arr.push(item["Skill_id"]);
+      });
+      console.log(arr);
 
-      const skills=req.body.Skills;
-      skillinsertion(skills,id);
+      const newarr = [];
+      skillids.forEach((item) => {
+        newarr.push(item);
+      });
+      console.log(newarr);
 
-      console.log("Skill Data Updated");
-      
-      res.send(result);
-    })
-  })
-}
+      const atodel = _.difference(arr, newarr);
+      const atoins = _.difference(newarr, arr);
 
-// Check's for data to be inserted is already present or not(If not call's for insertion of Skill for an employee and call's for deletion of previous skills).  
-function skillinsertion(skillids,id){
-  connection.query(`select Skill_id from skill_emp where Emp_id='${id}'`,(err,result)=>{
-    if(err){
-      throw err;
+      if (atodel && atodel.length > 0) {
+        atodel.forEach((item) => {
+          deleteSkillForUser(id, item);
+        });
+      }
+
+      if (atoins && atoins.length > 0) {
+        atoins.forEach((item) => {
+          skill_emp(id, item);
+        });
+      }
     }
-    
-    const arr=[];
-    rows.forEach((item)=>{
-      arr.push(item["Skill_id"]);
-    })
-    console.log(arr);
-    
-    const newarr=[];
-    skillids.forEach((item)=>{
-      newarr.push(item);
-    })
-    console.log(newarr)
-
-    const atodel=_.difference(arr,newarr);
-    const atoins=_.difference(newarr,arr);
-    
-    if(atodel && atodel.length>0){
-      atodel.forEach((item)=>{
-        deleteSkillForUser(id,item);
-      })
-    }
-    
-    if(atoins && atoins.length>0){
-      atoins.forEach((item)=>{
-        skill_emp(id,item);
-      })
-    }
-  })
+  );
 }
 
 // Delete's User's old Skills.
-function deleteSkillForUser(id,skill_id) {
-  connection.query(`delete from skill_emp where Emp_id=${id} and Skill_id=${skill_id};`,(err,result)=>{
-    if(err){
-      throw err;
+function deleteSkillForUser(id, skill_id) {
+  connection.query(
+    `delete from skill_emp where Emp_id=${id} and Skill_id=${skill_id};`,
+    (err, result) => {
+      if (err) {
+        throw err;
+      }
+      console.log("Deleted Skill " + skill_id + " of employee " + id);
     }
-    console.log("Deleted Skill "+skill_id+" of employee "+id);
-  })
+  );
 }
 
 // Makes app listen on port passed as parameter
 function listen() {
-  app.listen(3000,(err)=>{
-    if(err)
-    {
+  app.listen(3000, (err) => {
+    if (err) {
       console.log(err);
     }
     console.log("Running!");
@@ -264,7 +275,7 @@ function listen() {
 }
 
 // Contain's list of all API function's needed to be called.
-function main(){
+function main() {
   listen();
   sendFiles();
   getEmployeeData();
@@ -277,5 +288,3 @@ function main(){
 
 // Main Function.
 main();
-
-

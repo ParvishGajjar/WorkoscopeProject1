@@ -1,15 +1,14 @@
-
 .container {
-    width: 47%;
-    margin: 44px auto;
-    padding: 10px;
+  width: 47%;
+  margin: 44px auto;
+  padding: 10px;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
 }
-.display{
-  color:white;
+.display {
+  color: white;
 }
 
 form {
@@ -19,7 +18,7 @@ form {
   border: none;
   height: 28px;
   margin: 2px;
-  border: 1px solid #6B7363;
+  border: 1px solid #6b7363;
   font-size: 1.2em;
   padding: 5px;
   width: 95%;
@@ -36,47 +35,47 @@ form {
   border-radius: 5px;
   padding: 12px;
 }
-legend{
+legend {
   text-align: center;
   font-size: 2em;
   margin-right: 20px;
 }
-fieldset{
-background-color: #70eccb
+fieldset {
+  background-color: #70eccb;
 }
-mark{
-background-color: #70eccb
+mark {
+  background-color: #70eccb;
 }
 
-.view{
-    width: 288px;
-    /*height: 232px;*/
-    float: left;
-    padding-left: 7px;
-    overflow: hidden;
-    position: relative;
-    cursor: default;
-    background: rgba(13, 226, 105, 1);
-    -moz-border-radius: 6px;
-    -o-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border-radius: 6px;
-    margin-right: 48px;
-    margin-left: 47px;
-    margin-top: 28px;
-    margin-bottom: 20px;
+.view {
+  width: 288px;
+  /*height: 232px;*/
+  float: left;
+  padding-left: 7px;
+  overflow: hidden;
+  position: relative;
+  cursor: default;
+  background: rgba(13, 226, 105, 1);
+  -moz-border-radius: 6px;
+  -o-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  margin-right: 48px;
+  margin-left: 47px;
+  margin-top: 28px;
+  margin-bottom: 20px;
 }
 
 .view h4 {
-    color: #000;
-    /*text-align: center;*/
-    position: relative;
-    font-size: 1.2em;
+  color: #000;
+  /*text-align: center;*/
+  position: relative;
+  font-size: 1.2em;
 }
 .view p {
-    /*font-size: .9em;*/
-    /*position: relative;*/
-    color: #000;
-    padding: .1em 2em ;
-    /*text-align: center;*/
+  /*font-size: .9em;*/
+  /*position: relative;*/
+  color: #000;
+  padding: 0.1em 2em;
+  /*text-align: center;*/
 }
