@@ -317,7 +317,7 @@ function sendData(){
             ...result,
             'Skills': result2
         };
-        // console.log(post_data)
+        console.log(post_data)
         fetch('http://localhost:3000/api/add', {
           method: 'POST',
           headers: {
@@ -426,11 +426,13 @@ function RestoreSubmitButton()
   function log(event){
     // event.preventDefault();
 
-    console.log(id)
-    fetch('/api/prefill/'+id)
+    console.log(event.target.id)
+    fetch('/api/prefill/'+event.target.id)
     .then(response=> response.json())
     .then(data=>{
       console.log(data);
+      // var myDate = new Date(data[0]["DOB"]);
+      // console.log("Date: "+moment(myDate).format("YYYY-MM-DD"));
       
     })
     .catch(err=>{
