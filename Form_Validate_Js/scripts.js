@@ -84,10 +84,12 @@ function defaultprefill(data){
   console.log(data[0]["Gender"])
   document.getElementById(`${data[0]["Gender"]}`).checked = true;
   console.log(data[0]["Skills"][0])
-  data[0]["Skills"].forEach((item)=>{
-    document.getElementById(`${item}`).checked = true;
-  })
-  
+  // data[0]["Skills"].forEach((item)=>{
+  //   document.getElementById(`${item}`).checked = true;
+  // })
+   document.getElementById("country").value = data[0]["Country"];
+   document.getElementById("city").value = data[0]["City"];
+   document.getElementById("state").value = data[0]["State"];
 
 }
 
