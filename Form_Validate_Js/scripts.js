@@ -1,5 +1,4 @@
 
-
 // SELECTING ALL TEXT ELEMENTS
 var vform = document.getElementById('vform');
 
@@ -32,6 +31,7 @@ var country_error = document.getElementById('country_error');
 
 // SETTING ALL EVENT LISTENERS
 document.addEventListener('load',getSkill,true)
+document.addEventListener('load',prefill,true)
 document.getElementById("username_div").addEventListener('blur',usernameValidate,true);
 document.getElementById("lname_div").addEventListener('blur',lastnameValidate,true);
 document.getElementById("dob_div").addEventListener('blur',DOBValidate,true);
@@ -45,6 +45,52 @@ document.getElementById("state_div").addEventListener('blur',stateValidate,true)
 document.getElementById("country_div").addEventListener('blur',countryValidate,true);
 
 //fetch  skill function
+
+function prefill(){
+    console.log("hi")
+    urlp=[];
+    s=window.location.toString().split('?');
+    // s=s[1].split('&');
+    for(i=0;i<s.length;i++)
+    {
+      u=s[i].split('=');
+      urlp[u[0]]=u[1];
+    }
+    // console.log(urlp)
+  if(urlp["id"]!=null){
+    console.log(urlp["id"])
+    // console.log(event.target.id)
+    fetch('/api/prefill/'+urlp["id"])
+    .then(response=> response.json())
+    .then(data=>{
+     console.log(data)
+     defaultprefill(data)
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+    // console.log(urlp["id"])
+  }
+}
+function defaultprefill(data){
+  console.log(data[0]["Firstname"])
+  document.getElementById("fname").value=data[0]["Firstname"]
+  document.getElementById("lname").value=data[0]["Lastname"]
+  document.getElementById("email").value=data[0]["Email"]
+  document.getElementById("phone").value=data[0]["Phoneno"]
+  document.getElementById("add").value=data[0]["Address"]
+  console.log(data[0]["DOB"])
+  document.getElementById("dob").value=data[0]["DOB"];
+  console.log(data[0]["Gender"])
+  document.getElementById(`${data[0]["Gender"]}`).checked = true;
+  console.log(data[0]["Skills"][0])
+  data[0]["Skills"].forEach((item)=>{
+    document.getElementById(`${item}`).checked = true;
+  })
+  
+
+}
+
 function getSkill(){
         fetch('http://localhost:3000/api/skills')
         .then(response => {
@@ -52,13 +98,14 @@ function getSkill(){
           return response.json()
         })
         .then(data => {
-          console.log(data)
+          // console.log(data)
           data.forEach((item)=>{
-            console.log(item["Skill_name"]);
+            // console.log(item["Skill_name"]);
             // document.getElementById("Skillset").innerHTML=`<input type="checkbox" name="skill" value="${item["Skill_name"]}">${item["Skill_name"]}`
              var hold = document.getElementById("Skillset");
          var checkbox = document.createElement('input');
           checkbox.setAttribute("type","checkbox");
+          checkbox.setAttribute("id",item["Skill_name"])
           checkbox.setAttribute("value",item["Skill_id"]);
 
          var label = document.createElement('label');
@@ -406,13 +453,12 @@ function RestoreSubmitButton()
      
       for(let i=0;i<data.length;i++){
     document.getElementById("searched").innerHTML += `<div class="view">
-    <p style="text-align:right"><a href="main.html?id='${data[i]["Emp_id"]}'" ><i class="fa fa-pencil-square" aria-hidden="true" onclick="log(event)" id='${data[i]["Emp_id"]}'></i></a></p>
+    <p style="text-align:right"><i class="fa fa-pencil-square" aria-hidden="true" onclick="log(event,${data[i]["Emp_id"]})" id='${data[i]["Emp_id"]}'></i></p>
     <h4>Employee ID: ${data[i]["Emp_id"]}<br> Name: ${data[i]["Firstname"]} ${data[i]["Lastname"]}<br>Phone Number: ${data[i]["Phoneno"]}<br>
     Email ID: ${data[i]["Email"]}<br>
      Address: ${data[i]["Address"]}<br>
      Skills: ${data[i]["Skills"]} </h4>
   </div>`;
-    
       }
       // console.log(list)
       // document.getElementById("searched").innerHTML = list;
@@ -423,31 +469,37 @@ function RestoreSubmitButton()
     })
   }
   //Not happening by using EVENT
-  function log(event){
+  function log(event,id){
     // event.preventDefault();
-
-    console.log(event.target.id)
-    fetch('/api/prefill/'+event.target.id)
-    .then(response=> response.json())
-    .then(data=>{
-  console.log(data)
-
-  //Localstorage
-     // var d=  localStorage.setItem("Data", data);
-
-     setprefill(d,vform);
-    })
-    .catch(err=>{
-      console.log(err)
-    })
-    // console.log(event.target.id)
+    // console.log("hi")
+    x=window.location.origin + `main.html?id=${id}`
+    window.location.assign(`main.html?id=${id}`)
   }
-function setprefill(data,vform){
-  // event.preventDefault();
-  console.log("Hello me "+JSON.stringify(data))
-  console.log(data[0]["Firstname"])
 
-  //Local storage
-    // var data = localStorage.getItem("Data");
-    document.forms['vform']['First'].defaultValue = data[0]["Firstname"];
-}
+   
+  
+// function setprefill(data,vform){
+//   // event.preventDefault();
+//   // console.log("Hello me "+JSON.stringify(data))
+//   // GetURLParameter()
+//   // console.log(data[0]["Firstname"])
+
+//   var name=GetURLParameter(url);
+//   //Local storage
+//     // var data = localStorage.getItem("Data");
+//     document.forms['vform']['First'].defaultValue = name;
+// }
+
+// function GetURLParameter(sParam)
+// {
+//     var sPageURL = window.location.search.substring(1);
+//     var sURLVariables = sPageURL.split('?');
+//     for (var i = 0; i < sURLVariables.length; i++)
+//     {
+//      var sParameterName = sURLVariables[i].split('=');
+//         if (sParameterName[0] == sParam)
+//         {
+//             return sParameterName[1];
+//         }
+//       }
+// }
