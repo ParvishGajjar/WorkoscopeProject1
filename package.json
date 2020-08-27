@@ -10,8 +10,11 @@
     "mysql": "^2.18.1",
     "path": "^0.12.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
   "scripts": {
+    "dev": "nodemon ./Form_Validate_Js/serverdb.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +26,6 @@
   "bugs": {
     "url": "https://github.com/ParvishGajjar/WorkoscopeProject1/issues"
   },
-  "homepage": "https://github.com/ParvishGajjar/WorkoscopeProject1#readme"
+  "homepage": "https://github.com/ParvishGajjar/WorkoscopeProject1#readme",
+  "keywords": []
 }
