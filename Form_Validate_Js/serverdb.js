@@ -192,7 +192,7 @@ function updateData() {
     connection.query(
       `update employee set Firstname='${req.body.username}', Lastname='${req.body.lname}',
       Email='${req.body.email}', DOB='${req.body.dob}', Phoneno='${req.body.phone}', Address='${req.body.add}', 
-      City='${req.body.city}',State='${req.body.state}',Country='${req.body.country}, Gender='${req.body.gender}' where Emp_id='${req.body.id}';`,
+      City='${req.body.city}',State='${req.body.state}',Country='${req.body.country}', Gender='${req.body.gender}' where Emp_id='${req.body.id}';`,
       (err, result) => {
         if (err) {
           throw err;
@@ -216,7 +216,7 @@ function updateData() {
 function skillinsertion(skillids, id) {
   connection.query(
     `select Skill_id from skill_emp where Emp_id='${id}'`,
-    (err, result) => {
+    (err, rows) => {
       if (err) {
         throw err;
       }

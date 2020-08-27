@@ -76,15 +76,20 @@ function prefill() {
   // console.log(urlp)
   if (urlp["id"] != null) {
     console.log(urlp["id"]);
+    document.getElementById("loading").style.display="";
     // console.log(event.target.id)
     fetch("/api/prefill/" + urlp["id"])
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         defaultprefill(data);
+        document.getElementById("loading").style.display="none";
+
       })
       .catch((err) => {
         console.log(err);
+    document.getElementById("loading").style.display="none";
+
       });
     // console.log(urlp["id"])
   }
@@ -101,12 +106,12 @@ function defaultprefill(data) {
   console.log(data[0]["Gender"]);
   document.getElementById(`${data[0]["Gender"]}`).checked = true;
   console.log(data[0]["Skills"][0]);
-  data[0]["Skills"].forEach((item) => {
-    document.getElementById(`${item}`).checked = true;
-  });
   document.getElementById("country").value = data[0]["Country"];
   document.getElementById("city").value = data[0]["City"];
   document.getElementById("state").value = data[0]["State"];
+    data[0]["Skills"].forEach((item) => {
+    document.getElementById(`${item}`).checked = true;
+  });
 }
 
 function getSkill() {
@@ -487,6 +492,7 @@ function search() {
   event.preventDefault();
   document.getElementById("searched").innerHTML = "";
   const searchparam = document.getElementById("name").value;
+  document.getElementById("loading").style.display=""
   fetch("/api/users/" + searchparam)
     .then((res) => res.json())
     .then((data) => {
@@ -501,10 +507,14 @@ function search() {
      Skills: ${data[i]["Skills"]} </h4>
   </div>`;
       }
+  document.getElementById("loading").style.display="none"
+
     })
     .catch((err) => {
       console.log("Error");
       document.getElementById("searched").innerHTML = "Sorry! Error Detected";
+  document.getElementById("loading").style.display="none"
+
     });
 }
 function log(event, id) {
