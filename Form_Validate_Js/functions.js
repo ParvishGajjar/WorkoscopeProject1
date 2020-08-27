@@ -221,4 +221,5 @@ function listen(err) {
   console.log("Running!");
 }
 
+function hello(){}
 export {getEmployeeData,getSkillsData,searchData,addData,skill_emp,prefillData,updateData,hello,skillinsertion,deleteSkillForUser,listen};
