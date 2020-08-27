@@ -369,105 +369,100 @@ function skillsValidate() {
   }
 }
 
-function sendData(){
+function sendData() {
+  event.preventDefault();
+  var formData = new FormData(vform),
+    result = {};
+  for (var entry of formData.entries()) {
+    result[entry[0]] = entry[1];
+  }
+  //  result1 = JSON.stringify(result)
+  // console.log(result);
+  // document.getElementById("md").innerHTML=result1;
+  result2 = [];
+  var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+  for (var checkbox of checkboxes) {
+    // document.body.append(checkbox.value + ' ');
+    result2.push(checkbox.value);
+  }
+  const post_data = {
+    ...result,
+    Skills: result2,
+  };
+  console.log(post_data);
+  urlp = [];
+  s = window.location.toString().split("?");
+  // s=s[1].split('&');
+  for (i = 0; i < s.length; i++) {
+    u = s[i].split("=");
+    urlp[u[0]] = u[1];
+  }
+  // console.log(urlp)
+  if (urlp["id"]) {
+    console.log("Updating")
+    const new_data = {
+      ...post_data,
+      "id": urlp["id"],
+    };
+    // console.log(new_data)
+    // console.log("Id: "+new_data["id"])
+    fetch("/api/updatedata", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(new_data),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        RestoreSubmitButton();
+        document.getElementById("post").innerHTML = "Data Updated";
+      })
+      .catch((err) => {
+        console.log("Error");
+        RestoreSubmitButton();
+        document.getElementById("post").innerHTML = "Sorry! Error Detected";
+      });
+  } else {
+    console.log("Inserting")
+    fetch("http://localhost:3000/api/add", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(post_data),
+    })
+      .then((res) => {
+        // document.getElementById("post").innerHTML="Data Inserted"
+        console.log("then 1");
+        // console.log("Data Inserted! Insert ID: "+res["insertId"]);
 
-              event.preventDefault();
-              var formData = new FormData(vform),
-              result = {};
-        for (var entry of formData.entries())
-              {
-                result[entry[0]] = entry[1];
-              }
-            //  result1 = JSON.stringify(result)
-              // console.log(result);
-              // document.getElementById("md").innerHTML=result1;
-              result2=[]
-          var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            for (var checkbox of checkboxes) {
-            // document.body.append(checkbox.value + ' ');
-              result2.push(checkbox.value)
-            }
-            const post_data = {
-            ...result,
-            'Skills': result2
-        };
-        console.log(post_data)
-        urlp=[];
-        s=window.location.toString().split('?');
-        // s=s[1].split('&');
-        for(i=0;i<s.length;i++)
-        {
-          u=s[i].split('=');
-          urlp[u[0]]=u[1];
-        }
-        // console.log(urlp)
-        if(urlp["id"]!=null){
-            const new_data={
-              ...post_data,
-              'id': urlp["id"]
-            }
-            fetch('/api/updatedata',{
-              method: 'POST',
-              headers: {
-                'Content-type': 'application/json'
-              },
-              body: JSON.stringify(new_data)
-            })
-            .then(res => {
-              return res.json()         
-            })
-            .then(res => {
-              RestoreSubmitButton();
-              document.getElementById("post").innerHTML="Data Updated"     
-            })
-            .catch(err=>{
-              console.log("Error")
-              RestoreSubmitButton();
-              document.getElementById("post").innerHTML = "Sorry! Error Detected";
-            }) 
-          }
-          else{
-        fetch('http://localhost:3000/api/add', {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json'
-          },
-          body: JSON.stringify(post_data)
-        })
-        .then(res => {
-          // document.getElementById("post").innerHTML="Data Inserted"
-          console.log("then 1")
-          // console.log("Data Inserted! Insert ID: "+res["insertId"]);
+        // RestoreSubmitButton();
+        return res.json();
+      })
+      .then((res) => {
+        // document.getElementById("post").innerHTML="Data Inserted"
+        console.log("then 2");
+        // console.log("Data Inserted! Insert ID: "+res["insertId"]);
+        RestoreSubmitButton();
+        document.getElementById("post").innerHTML = "Data Inserted";
+      })
+      // .then(json => {
 
-          // RestoreSubmitButton();
-          return res.json()
-         
-        })
-        .then(res => {
+      //   console.log("Data Inserted! Insert ID: "+json["insertId"]);
+      //               RestoreSubmitButton();
+      // })
+      .catch((err) => {
+        console.log("Error");
+        RestoreSubmitButton();
 
-          // document.getElementById("post").innerHTML="Data Inserted"
-          console.log("then 2")
-          // console.log("Data Inserted! Insert ID: "+res["insertId"]);
-          RestoreSubmitButton();
-          document.getElementById("post").innerHTML="Data Inserted"
-         
-         
-        })
-        // .then(json => {
-      
-        //   console.log("Data Inserted! Insert ID: "+json["insertId"]);
-        //               RestoreSubmitButton();
-        // })
-        .catch(err=>{
-          console.log("Error")
-          RestoreSubmitButton();
-
-          document.getElementById("post").innerHTML = "Sorry! Error Detected";
-        })  
-      }
-        // result=JSON.stringify(result)
+        document.getElementById("post").innerHTML = "Sorry! Error Detected";
+      });
+  }
+  // result=JSON.stringify(result)
 }
-
 
 function ButtonClicked() {
   document.getElementById("formsubmitbutton").style.display = "none"; // to undisplay
