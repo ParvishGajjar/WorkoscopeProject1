@@ -1,4 +1,4 @@
-varvar express = require("express");
+var express = require("express");
 var _ = require("lodash");
 var moment = require("moment");
 const mysql = require("mysql");
@@ -187,7 +187,7 @@ function prefillData(req, res) {
 }
 
 // Update user's data.
-function updateData(req, res) {
+function updateData(req, res, next) {
   connection.query(
     `update employee set Firstname='${req.body.username}', Lastname='${req.body.lname}',
       Email='${req.body.email}', DOB='${req.body.dob}', Phoneno='${req.body.phone}', Address='${req.body.add}', 
@@ -205,7 +205,7 @@ function updateData(req, res) {
 
       console.log("Skill Data Updated");
       res.send(result);
-      // next(); //hello Call-back function called
+      next(); //hello Call-back function called
     }
   );
 }
