@@ -1,4 +1,4 @@
-var express = require("express");
+varvar express = require("express");
 var _ = require("lodash");
 var moment = require("moment");
 const mysql = require("mysql");
@@ -187,22 +187,15 @@ function prefillData(req, res) {
 }
 
 // Update user's data.
-function updateData(req, res, next) {
+function updateData(req, res) {
   connection.query(
     `update employee set Firstname='${req.body.username}', Lastname='${req.body.lname}',
       Email='${req.body.email}', DOB='${req.body.dob}', Phoneno='${req.body.phone}', Address='${req.body.add}', 
       City='${req.body.city}',State='${req.body.state}',Country='${req.body.country}', Gender='${req.body.gender}' where Emp_id='${req.body.id}';`,
-<<<<<<< HEAD
     (err, result) => {
       if (err) {
         throw err;
       }
-=======
-      (err, result) => {
-        if (err) {
-          throw err;
-        }
->>>>>>> 02e2bb519eb268696daa9b36c647198cec51838d
 
       const id = req.body.id;
       console.log("Data Updated");
@@ -212,7 +205,7 @@ function updateData(req, res, next) {
 
       console.log("Skill Data Updated");
       res.send(result);
-      next(); //hello Call-back function called
+      // next(); //hello Call-back function called
     }
   );
 }
